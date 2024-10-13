@@ -1,7 +1,7 @@
-CREATE SCHEMA IF NOT EXISTS `exercicio` DEFAULT CHARACTER SET utf8 ;
-USE `exercicio` ;
+CREATE SCHEMA IF NOT EXISTS `exercicio01` DEFAULT CHARACTER SET utf8 ;
+USE `exercicio01` ;
 
-CREATE TABLE IF NOT EXISTS `exercicio`.`aluno` (
+CREATE TABLE IF NOT EXISTS `exercicio01`.`aluno` (
   `aluno_id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(255) NOT NULL,
   `curso` VARCHAR(100) NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `exercicio`.`aluno` (
 ENGINE = InnoDB;
 
 
-CREATE TABLE IF NOT EXISTS `exercicio`.`turma` (
+CREATE TABLE IF NOT EXISTS `exercicio01`.`turma` (
   `turma_id` INT NOT NULL AUTO_INCREMENT,
   `nometurma` VARCHAR(255) NOT NULL,
   `sala` INT NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `exercicio`.`turma` (
 )
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `exercicio`.`matricula` (
+CREATE TABLE IF NOT EXISTS `exercicio01`.`matricula` (
   `matricula_id` INT NOT NULL AUTO_INCREMENT,
   `aluno_id` INT NOT NULL,
   `turma_id` INT NOT NULL,
