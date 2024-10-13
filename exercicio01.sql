@@ -55,18 +55,18 @@ WHERE t.turma_id IS NULL;
 SELECT m.aluno_id FROM matricula m WHERE m.turma_id = 30;
 
 -- 5: Qual o horário da turma do aluno 'PERNA LONGA'
-SELECT t.horario , a.nome FROM aluno a
-INNER JOIN matricula m ON a.aluno_id = m.aluno_id
-INNER JOIN turma t ON m.turma_id = t.turma_id
+SELECT t.horario, a.nome FROM aluno a 
+INNER JOIN matricula m ON a.aluno_id = m.aluno_id 
+INNER JOIN turma t ON m.turma_id = t.turma_id 
 WHERE a.nome LIKE 'PERNA LONGA';
 
 -- 6: Quais os nomes dos alunos matriculados em uma turma de número '30'?
-SELECT a.nome FROM matricula m
-INNER JOIN aluno a ON m.aluno_id = a.aluno_id
-WHERE m.turma_id =  (SELECT turma_id FROM turma WHERE nometurma = 'Turma Do ID 30');
+SELECT a.nome FROM matricula m 
+INNER JOIN aluno a ON m.aluno_id = a.aluno_id 
+WHERE m.turma_id = (SELECT turma_id FROM turma WHERE nometurma = 'Turma Do ID 30');
 
 -- 7: Quais os nomes dos alunos que não estão matriculados na turma de número '30'?
-SELECT nome
+SELECT nome 
 FROM aluno 
 WHERE aluno_id NOT IN (
     SELECT aluno_id 
@@ -93,36 +93,35 @@ INSERT INTO `turma` (nometurma, sala, horario ) VALUES ("Turma 1", 1, "09:00 - 1
 INSERT INTO `turma` (nometurma, sala, horario ) VALUES ("Turma 2", 2, "09:00 - 12:00"); 
 INSERT INTO `turma` (nometurma, sala, horario ) VALUES ("Turma 2", 2, "09:00 - 12:00"); 
 INSERT INTO `turma` (nometurma, sala, horario ) VALUES ("Turma 1", 1, "09:00 - 12:00"); 
-INSERT INTO `turma` (nometurma, sala, horario ) VALUES ("Turma 1", 1, "09:00 - 12:00"); 
 INSERT INTO `turma` (nometurma, sala, horario ) VALUES ("Turma Do PERNA LONGA", 1, "09:00 - 12:00"); 
 INSERT INTO `turma` (nometurma, sala, horario ) VALUES ("Turma Do ID 30", 6, "09:00 - 12:00"); 
 
 INSERT INTO `matricula` (aluno_id, turma_id, nota_1, nota_2, nota_3, nota_final, nr_faltas) 
 VALUES (1, 1, 8.5, 9.0, 8.0, 8.5, 0);  -- Israel matriculado na Turma 1
 INSERT INTO `matricula` (aluno_id, turma_id, nota_1, nota_2, nota_3, nota_final, nr_faltas) 
-VALUES (2, 2, 8.5, 9.0, 8.0, 8, 0);    -- Dênis matriculado na Turma 2
+VALUES (2, 2, 8.5, 9.0, 8.0, 8.7, 0);    -- Dênis matriculado na Turma 2
 INSERT INTO `matricula` (aluno_id, turma_id, nota_1, nota_2, nota_3, nota_final, nr_faltas) 
-VALUES (3, 1, 8.5, 9.0, 8.0, 8.5, 0);  -- Ale matriculado na Turma 1
+VALUES (3, 1, 8.5, 9.0, 8.0, 7.5, 0);  -- Ale matriculado na Turma 1
 INSERT INTO `matricula` (aluno_id, turma_id, nota_1, nota_2, nota_3, nota_final, nr_faltas) 
-VALUES (4, 2, 8.5, 9.0, 8.0, 8.5, 0);  -- Vitti matriculado na Turma 2
+VALUES (4, 3, 8.5, 9.0, 8.0, 9.5, 0);  -- Vitti matriculado na Turma 3
 INSERT INTO `matricula` (aluno_id, turma_id, nota_1, nota_2, nota_3, nota_final, nr_faltas) 
-VALUES (5, 1, 8.5, 9.0, 8.0, 8.5, 0);  -- Henrique matriculado na Turma 1
+VALUES (5, 3, 8.5, 9.0, 8.0, 8.5, 0);  -- Henrique matriculado na Turma 3
 INSERT INTO `matricula` (aluno_id, turma_id, nota_1, nota_2, nota_3, nota_final, nr_faltas) 
-VALUES (7, 2, 8.5, 9.0, 8.0, 8.5, 0);  -- PERNA LONGA matriculado na Turma 2
+VALUES (6, 6, 8.5, 9.0, 8.0, 6, 0);  -- PERNA LONGA matriculado na Turma 6
 INSERT INTO `matricula` (aluno_id, turma_id, nota_1, nota_2, nota_3, nota_final, nr_faltas) 
-VALUES (8, 9, 8.5, 9.0, 8.0, 9.25, 0);  -- PERNA LONGA matriculado na Turma 2
+VALUES (7, 7, 8.5, 9.0, 8.0, 9.25, 0);  -- PERNA BAMBA matriculado na Turma 7
 
 SELECT * FROM turma;
 
 SELECT a.*, m.*, t.* 
-FROM aluno a
-INNER JOIN matricula m ON a.aluno_id = m.aluno_id
-INNER JOIN turma t ON m.turma_id = t.turma_id
+FROM aluno a 
+INNER JOIN matricula m ON a.aluno_id = m.aluno_id 
+INNER JOIN turma t ON m.turma_id = t.turma_id 
 WHERE a.nome = "PERNA BAMBA";
 
 SELECT a.*, m.*, t.* 
-FROM aluno a
-INNER JOIN matricula m ON a.aluno_id = m.aluno_id
+FROM aluno a 
+INNER JOIN matricula m ON a.aluno_id = m.aluno_id 
 INNER JOIN turma t ON m.turma_id = t.turma_id;
 
 
