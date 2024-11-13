@@ -100,9 +100,11 @@ ORDER BY c.data_comanda, c.comanda_id, ca.nome_cafe;
 -- 3: Liste todas as comandas (código, data, mesa e nome do cliente) mais uma
 -- coluna com o valor total da comanda. Ordene por data esta listagem;
 
-SELECT c.comanda_id, c.data_comanda, c.mesa, c.nome_cliente, i.preco_total 
+SELECT c.comanda_id, c.data_comanda, c.mesa, c.nome_cliente, SUM(i.preco_total) AS total_comanda 
 FROM `comanda` c 
-INNER JOIN `itens_comanda` i ON i.comanda_id = c.comanda_id;
+INNER JOIN `itens_comanda` i ON i.comanda_id = c.comanda_id 
+GROUP BY c.comanda_id, c.data_comanda, c.mesa, c.nome_cliente 
+ORDER BY c.data_comanda;
 
 -- 4: Faça a mesma listagem das comandas da questão anterior (6), mas traga apenas as
 -- comandas que possuem mais do que um tipo de café na comanda;
@@ -120,4 +122,4 @@ SELECT c.data_comanda, SUM(i.preco_total ) AS total_preco
 FROM `comanda` c 
 INNER JOIN `itens_comanda` i ON i.comanda_id = c.comanda_id 
 GROUP BY c.data_comanda 
-ORDER BY c.data_comanda, total_preco;
+ORDER BY c.data_comanda;
