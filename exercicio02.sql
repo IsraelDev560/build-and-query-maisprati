@@ -77,6 +77,12 @@ INSERT INTO `itens_comanda`(
     3, 2, 3, 1.50
 );
 
+INSERT INTO `itens_comanda`(
+    comanda_id, cardapio_id, quantidade, preco_total
+) VALUES (
+    3, 3, 2, 6.40
+);
+
 -- 1: Faça uma listagem do cardápio ordenada por nome;
 SELECT nome_cafe FROM `cardapio`;
 
@@ -85,9 +91,33 @@ SELECT nome_cafe FROM `cardapio`;
 -- preço unitário e preço total do café) destas ordenados data e código da comanda e,
 -- também o nome do café;
 
-SELECT c.data_comanda, i.comanda_id, ca.nome_cafe 
+SELECT c.data_comanda, c.mesa, c.nome_cliente, i.comanda_id, i.quantidade, i.preco_total, ca.nome_cafe, ca.descricao, ca.preco_unitario  
 FROM `comanda` c 
 INNER JOIN `itens_comanda` i ON i.comanda_id = c.comanda_id 
-INNER JOIN `cardapio` ca ON i.cardapio_id = ca.cardapio_id;
+INNER JOIN `cardapio` ca ON i.cardapio_id = ca.cardapio_id 
+ORDER BY c.data_comanda, c.comanda_id, ca.nome_cafe;
 
-SELECT * FROM comanda, itens_comanda;
+-- 3: Liste todas as comandas (código, data, mesa e nome do cliente) mais uma
+-- coluna com o valor total da comanda. Ordene por data esta listagem;
+
+SELECT c.comanda_id, c.data_comanda, c.mesa, c.nome_cliente, i.preco_total 
+FROM `comanda` c 
+INNER JOIN `itens_comanda` i ON i.comanda_id = c.comanda_id;
+
+-- 4: Faça a mesma listagem das comandas da questão anterior (6), mas traga apenas as
+-- comandas que possuem mais do que um tipo de café na comanda;
+
+SELECT c.comanda_id, c.data_comanda, c.mesa, c.nome_cliente 
+FROM `comanda` c 
+INNER JOIN `itens_comanda` i ON i.comanda_id = c.comanda_id 
+INNER JOIN `cardapio` ca ON i.cardapio_id = ca.cardapio_id 
+GROUP BY c.comanda_id, c.data_comanda, c.mesa, c.nome_cliente 
+HAVING COUNT(DISTINCT ca.cardapio_id) > 1;
+
+--- 5: Qual o total de faturamento por data? ordene por data esta consulta.
+
+SELECT c.data_comanda, SUM(i.preco_total ) AS total_preco 
+FROM `comanda` c 
+INNER JOIN `itens_comanda` i ON i.comanda_id = c.comanda_id 
+GROUP BY c.data_comanda 
+ORDER BY c.data_comanda, total_preco;
