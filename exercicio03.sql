@@ -149,3 +149,58 @@ SELECT a.nome, al.ausencias FROM `exercicio03`.`alunos` AS a
 INNER JOIN `aluno_turma` al ON al.aluno_id = a.aluno_id 
 WHERE al.ausencias = 0 
 GROUP BY a.nome, al.ausencias;
+
+-- 4: Listar os professores e a quantidade de turmas que cada um leciona;
+SELECT p.nome, COUNT(pt.turma_id) AS quantidade_turmas 
+FROM `exercicio03`.`professor` AS p 
+INNER JOIN `exercicio03`.`professor_turma` AS pt ON p.professor_id = pt.professor_id 
+GROUP BY p.nome;
+
+-- 5: Listar nome dos professores, apenas um dos números de telefone do professor,
+-- dados (id da turma, data início, data fim e horário) das turmas que o professor
+-- leciona, curso da turma e alunos matriculados ordenado por nome do professor,
+-- id turma e nome do aluno;
+SELECT 
+    p.nome AS nome_professor, 
+    MIN(tp.telefone) AS telefone_professor,
+    t.turma_id, 
+    t.data_inicial, 
+    t.data_final, 
+    t.horario, 
+    t.tipo_curso, 
+    a.nome AS nome_aluno 
+FROM 
+    `exercicio03`.`professor` AS p 
+INNER JOIN 
+    `exercicio03`.`telefone_professor` AS tp ON p.professor_id = tp.professor_id 
+INNER JOIN 
+    `exercicio03`.`professor_turma` AS pt ON p.professor_id = pt.professor_id 
+INNER JOIN 
+    `exercicio03`.`turma` AS t ON pt.turma_id = t.turma_id 
+INNER JOIN 
+    `exercicio03`.`aluno_turma` AS at ON t.turma_id = at.turma_id 
+INNER JOIN 
+    `exercicio03`.`alunos` AS a ON at.aluno_id = a.aluno_id 
+GROUP BY 
+    p.nome, t.turma_id, a.nome 
+ORDER BY 
+    nome_professor, t.turma_id, nome_aluno;
+
+-- 6: Alterar o nome de todos os professores para maiúsculo;2) Colocar o nome de todos
+-- os alunos que estão na turma com o maior número de alunos em maiúsculo;
+UPDATE `exercicio03`.`professor` SET nome = UPPER(nome);
+UPDATE `exercicio03`.`alunos` AS a 
+INNER JOIN `exercicio03`.`aluno_turma` AS at ON a.aluno_id = at.aluno_id 
+INNER JOIN `exercicio03`.`turma` AS t ON at.turma_id = t.turma_id 
+SET a.nome = UPPER(a.nome) 
+WHERE t.quantidade_aluno = (
+    SELECT MAX(quantidade_aluno) 
+    FROM `exercicio03`.`turma`
+);
+
+-- 7: Excluir as ausências dos alunos nas turmas que estes são monitores;
+
+DELETE at
+FROM `exercicio03`.`aluno_turma` AS at
+INNER JOIN `exercicio03`.`turma` AS t ON at.turma_id = t.turma_id
+WHERE at.aluno_id = t.aluno_monitor;
